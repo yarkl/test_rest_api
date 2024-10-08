@@ -1,0 +1,67 @@
+version: '3.6'
+
+services:
+  redis:
+    container_name: ${APP_NAME}_redis
+    image: redis:alpine
+    networks:
+      dev-env:
+        ipv4_address: 192.168.100.103
+
+  nginx:
+    container_name: ${APP_NAME}_nginx
+    build:
+      context: image/nginx
+      args:
+        SERVER_NAME: ${APP_NAME}
+    links:
+      - php-fpm
+    depends_on:
+      - php-fpm
+    networks:
+      dev-env:
+        ipv4_address: 192.168.100.104
+
+  php-fpm:
+    container_name: ${APP_NAME}_php-fpm
+    build:
+      context: image/php-fpm
+    env_file:
+      - ./.env
+    networks:
+      dev-env:
+        ipv4_address: 192.168.100.105
+
+  php-cli:
+      container_name: ${APP_NAME}_php-cli
+      build:
+        context: image/php-cli
+      volumes:
+        - ../:/var/www/service:delegated
+      depends_on:
+        - db
+      env_file:
+        - ./.env
+      working_dir: /var/www/service
+      tty: true
+      networks:
+        dev-env:
+          ipv4_address: 192.168.100.110
+
+  db:
+    container_name: ${APP_NAME}_db
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '123456'
+    networks:
+      dev-env:
+        ipv4_address: 192.168.100.106
+
+networks:
+  dev-env:
+    name: dev-env
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24

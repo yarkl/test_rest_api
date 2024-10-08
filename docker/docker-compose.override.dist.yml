@@ -1,0 +1,26 @@
+version: '3.6'
+
+services:
+  nginx:
+    volumes:
+      - ../public:/var/www/service/public:ro
+    ports:
+      - 8080:80
+
+  php-fpm:
+    volumes:
+      - ../:/var/www/service:delegated
+      - ~/.ssh/:/home/developer/.ssh
+    build:
+      args:
+        UID: ${UID}
+        GID: ${GID}
+
+  db:
+    volumes:
+      - database:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+volumes:
+  database:

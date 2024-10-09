@@ -25,3 +25,15 @@ services:
 
     App\Model\EventDispatcher:
         class: App\Event\Dispatcher\MessengerEventDispatcher
+
+    App\Service\JWT\JWTService:
+        $secretKey: '%env(JWT_SECRET_KEY)%'
+        $tokenTtl: '%env(int:JWT_TOKEN_TTL)%'
+        $refreshTokenTtl: '%env(int:JWT_REFRESH_TOKEN_TTL)%'
+
+    App\Security\Listener\SecurityListener:
+        autowire: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller }
+
+    App\Model\Service\JwtServiceInterface: '@App\Service\JWT\JWTService'

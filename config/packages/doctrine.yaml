@@ -10,7 +10,7 @@ doctrine:
         use_savepoints: true
 
         types:
-            document_document_id: 'App\Model\Document\Entity\Document\IdType'
+            custom_uuid: 'App\Model\User\Entity\Common\IdType'
 
     orm:
         auto_generate_proxy_classes: true
@@ -20,17 +20,11 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-#            App:
-#                type: attribute
-#                is_bundle: false
-#                dir: '%kernel.project_dir%/src/Entity'
-#                prefix: 'App\Entity'
-#                alias: App
-            Document:
+            User:
                 is_bundle: false
                 type: attribute
-                dir: '%kernel.project_dir%/src/Model/Document/Entity/'
-                prefix: 'App\Model\Document\Entity'
+                dir: '%kernel.project_dir%/src/Model/User/Entity/'
+                prefix: 'App\Model\User\Entity'
                 alias: User
 
 when@test:

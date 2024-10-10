@@ -1,10 +1,11 @@
 
+<pre>
 <h2>Project setup</h2>
 1. cd docker
 2. Install docker containers by running "make setup".
-3. Ssg into php-cli container by running "make sh"
+3. Ssh into php-cli container by running "make sh"
 4. Apply migrations by running "doctrine:migrations:migrate"
-
+</pre>
 <pre>
 Endpoints:
     signup:

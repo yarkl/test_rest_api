@@ -14,7 +14,7 @@ readonly class Command
         public string $token,
         #[Assert\Uuid(strict: false)]
         public string $uuid,
-        #[Assert\Json]
-        public string $payload,
+        #[Assert\Type('array')]
+        public array $payload,
     ){}
 }

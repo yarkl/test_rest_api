@@ -12,7 +12,7 @@ readonly class Command
         #[Assert\NotBlank]
         #[Assert\Type('string')]
         public string $token,
-        #[Assert\Json]
-        public string $payload
+        #[Assert\Type('array')]
+        public array $payload
     ) {}
 }

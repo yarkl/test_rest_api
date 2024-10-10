@@ -25,10 +25,14 @@ class DocumentRestController extends AbstractController
         ValidatorInterface $validator,
         Create\Handler $handler,
     ): JsonResponse {
-        $command = new Create\Command(
-            $request->get('authorization_token'),
-            $request->getContent()
-        );
+        try {
+            $command = new Create\Command(
+                $request->get('authorization_token'),
+                json_decode($request->getContent(), true)['payload']
+            );
+        } catch (\Throwable $exception) {
+            return new JsonResponse(['error' => $exception->getMessage()], 400);
+        }
 
         $errors = $validator->validate($command);
 
@@ -52,11 +56,16 @@ class DocumentRestController extends AbstractController
         ValidatorInterface $validator,
         Update\Handler $handler
     ): JsonResponse {
-        $command = new Update\Command(
-            $request->get('authorization_token'),
-            $uuid,
-            $request->getContent()
-        );
+        try {
+            $command = new Update\Command(
+                $request->get('authorization_token'),
+                $uuid,
+                json_decode($request->getContent(), true)['payload']
+            );
+
+        } catch (\Throwable $exception) {
+            return new JsonResponse($exception->getMessage(), 400);
+        }
 
         $errors = $validator->validate($command);
 
@@ -80,11 +89,16 @@ class DocumentRestController extends AbstractController
         ValidatorInterface $validator,
         Publish\Handler $handler
     ): JsonResponse {
-        $command = new  Publish\Command(
-            $request->get('authorization_token'),
-            $uuid,
-            $request->getContent()
-        );
+        try {
+            $command = new  Publish\Command(
+                $request->get('authorization_token'),
+                $uuid,
+                $request->getContent()
+            );
+
+        } catch (\Throwable $exception) {
+            return new JsonResponse($exception->getMessage(), 400);
+        }
 
         $errors = $validator->validate($command);
 

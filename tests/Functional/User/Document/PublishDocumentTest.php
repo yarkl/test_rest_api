@@ -25,8 +25,10 @@ class PublishDocumentTest extends DbWebTestCase
                 'HTTP_AUTHORIZATION' => 'Bearer :' . $authContent['token'],
             ],
             content: json_encode([
-                'first_name' => 'John',
-                'last_name' => 'Doe',
+                'payload' => [
+                    'first_name' => 'John',
+                    'last_name' => 'Doe',
+                ]
             ])
         );
         $content = json_decode($this->client->getResponse()->getContent(), true);
@@ -39,8 +41,10 @@ class PublishDocumentTest extends DbWebTestCase
                 'HTTP_AUTHORIZATION' => 'Bearer :' . $authContent['token'],
             ],
             content: json_encode([
-                'first_name' => 'Alexandr',
-                'last_name' => 'Doe',
+                'payload' => [
+                    'first_name' => 'Alexandr',
+                    'last_name' => 'Doe',
+                ]
             ])
         );
 

@@ -25,8 +25,10 @@ class UpdateDocumentTest extends DbWebTestCase
                 'HTTP_AUTHORIZATION' => 'Bearer :' . $authContent['token'],
             ],
             content: json_encode([
-                'first_name' => 'John',
-                'last_name' => 'Doe',
+                'payload' => [
+                    'first_name' => 'John',
+                    'last_name' => 'Doe',
+                ]
             ])
         );
         $content = json_decode($this->client->getResponse()->getContent(), true);
@@ -43,7 +45,7 @@ class UpdateDocumentTest extends DbWebTestCase
                 'CONTENT_TYPE' => 'application/json',
                 'HTTP_AUTHORIZATION' => 'Bearer :' . $authContent['token']
             ],
-            content: json_encode($updatedDocument)
+            content: json_encode(['payload' => $updatedDocument])
         );
 
         self::assertEquals(201, $this->client->getResponse()->getStatusCode());

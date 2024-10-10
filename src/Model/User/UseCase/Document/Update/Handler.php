@@ -44,8 +44,7 @@ class Handler
             throw new DomainException('Invalid token!');
         }
 
-        $payload = json_decode($command->payload, true);
-        $document->updatePayload($payload);
+        $document->updatePayload($command->payload);
         $document->modifiedAt();
 
         $this->flusher->flush($document);
@@ -53,7 +52,7 @@ class Handler
         return new Result(
             $document->getUuid()->getValue(),
             $document->status(),
-            $payload,
+            $command->payload,
             $document->getCreatedAt()->format('Y-m-d H:i:s'),
             $document->getModifiedAt()->format('Y-m-d H:i:s')
         );

@@ -29,7 +29,7 @@ class CreateDocumentTest extends DbWebTestCase
                 'CONTENT_TYPE' => 'application/json',
                 'HTTP_AUTHORIZATION' => 'Bearer :' . $authContent['token'],
             ],
-            content: json_encode($payload)
+            content: json_encode(['payload' => $payload])
         );
 
         self::assertEquals(201, $this->client->getResponse()->getStatusCode());

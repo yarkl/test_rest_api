@@ -38,12 +38,11 @@ class Handler
             throw new DomainException('Token has been expired!');
         }
         $user = $token->getUser();
-        $payload = json_decode($command->payload, true);
 
         $document = new Document(
             Id::next(),
             Document::STATUS_DRAFT,
-            $payload,
+            $command->payload,
             $date = new \DateTime(),
             $date,
             $user
@@ -55,7 +54,7 @@ class Handler
         return new Result(
             $document->getUuid()->getValue(),
             $document->status(),
-            $payload,
+            $command->payload,
             $document->getCreatedAt()->format('Y-m-d H:i:s'),
             $document->getModifiedAt()->format('Y-m-d H:i:s')
         );

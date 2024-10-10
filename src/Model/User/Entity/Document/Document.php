@@ -110,4 +110,9 @@ class Document implements AggregateRoot
 
         return $this;
     }
+
+    public function published(): bool
+    {
+        return $this->status === self::STATUS_PUBLISHED;
+    }
 }

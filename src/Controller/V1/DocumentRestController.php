@@ -93,7 +93,7 @@ class DocumentRestController extends AbstractController
             $command = new  Publish\Command(
                 $request->get('authorization_token'),
                 $uuid,
-                $request->getContent()
+                $request->getContent()['payload']
             );
 
         } catch (\Throwable $exception) {

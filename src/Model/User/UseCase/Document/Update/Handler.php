@@ -40,6 +40,12 @@ class Handler
             throw new DocumentNotFoundException("Document with uuid '{$command->uuid}' not found");
         }
 
+        if ($document->published()) {
+            throw new DocumentNotFoundException(
+                "Document with uuid '{$command->uuid}' can not be updated as it is already published"
+            );
+        }
+
         if (time() > $decodedToken['exp'] || $decodedToken['user_id'] != $document->getUser()->getUuid()->getValue()) {
             throw new DomainException('Invalid token!');
         }

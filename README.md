@@ -22,6 +22,12 @@ Endpoints:
         response: {"token": "TOKEN", "refresh_token": "REFRESH_TOKEN"}
         explanation: When your token has been expired send your REFRESH_TOKEN, from the signup response, 
                      to refresh your token
+    login
+        url: http://192.168.100.104/api/v1/login
+        format: json
+        body: {"login": "USER_NAME"}
+        response: {"token": "TOKEN", "refresh_token": "REFRESH_TOKEN"}
+        explanation: Use this endpoint when your refresh_token has been expired to get new token and refresh_token    
     create-document:
         url: http://192.168.100.104/api/v1/document
         format: json

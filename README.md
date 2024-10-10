@@ -14,7 +14,7 @@ Endpoints:
         body: {"login": "USER_NAME"}
         response: {"token": "TOKEN", "refresh_token": "REFRESH_TOKEN"}
         explanation: Use token field, from response, to send every further request, 
-                     by adding Authorization: Bearer TOKEN header
+                     by adding "Authorization: Bearer TOKEN" header
     refresh-token
         url: http://192.168.100.104/api/v1/refresh-token
         format: json

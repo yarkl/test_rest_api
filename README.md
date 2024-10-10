@@ -96,5 +96,10 @@ Endpoints:
                     "createAt": DATE_TIME,
                     "modifyAt": DATE_TIME
                 }
-            }        
+            }
+
+    To get single document send get request to http://192.168.100.104/api/v1/document/UUID where UUID is the UUID
+    of the document
+
+    To get list off all documents send get request to http://192.168.100.104/api/v1/document?page=1&perPage=20
 </pre>

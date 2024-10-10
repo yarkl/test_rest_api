@@ -10,16 +10,15 @@ use App\Model\Service\JwtServiceInterface;
 use App\Model\User\Entity\Document\DocumentRepository;
 use App\Model\User\Entity\Token\TokenRepository;
 use App\Model\User\UseCase\Document\Result;
-use App\Service\JWT\JWTService;
 use DomainException;
 
-class Handler
+readonly class Handler
 {
     public function __construct(
-        private readonly DocumentRepository $repository,
-        private readonly TokenRepository  $tokenRepository,
-        private readonly JwtServiceInterface $JWTService,
-        private readonly Flusher $flusher
+        private DocumentRepository $repository,
+        private TokenRepository  $tokenRepository,
+        private JwtServiceInterface $JWTService,
+        private Flusher $flusher
     ) {}
 
     public function handle(Command $command): Result

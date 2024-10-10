@@ -64,13 +64,17 @@ class DocumentRestController extends AbstractController
             );
 
         } catch (\Throwable $exception) {
-            return new JsonResponse($exception->getMessage(), 400);
+            return new JsonResponse([
+                'error' => $exception->getMessage()
+            ], 400);
         }
 
         $errors = $validator->validate($command);
 
         if (count($errors) > 0) {
-            return new JsonResponse([], 400);
+            return new JsonResponse([
+                'error' => 'Validation failed!',
+            ], 400);
         }
 
         try {
@@ -78,7 +82,9 @@ class DocumentRestController extends AbstractController
 
             return new JsonResponse($result->toArray(),  201);
         } catch (DomainException $e) {
-            return new JsonResponse($e->getMessage(), 400);
+            return new JsonResponse([
+                'error' => $e->getMessage()
+            ], 400);
         }
     }
 
@@ -93,11 +99,13 @@ class DocumentRestController extends AbstractController
             $command = new  Publish\Command(
                 $request->get('authorization_token'),
                 $uuid,
-                $request->getContent()['payload']
+                json_decode($request->getContent(), true)['payload']
             );
 
         } catch (\Throwable $exception) {
-            return new JsonResponse($exception->getMessage(), 400);
+            return new JsonResponse([
+                'error' => $exception->getMessage()
+            ], 400);
         }
 
         $errors = $validator->validate($command);
@@ -111,7 +119,9 @@ class DocumentRestController extends AbstractController
 
             return new JsonResponse($result->toArray(),  201);
         } catch (DomainException $e) {
-            return new JsonResponse($e->getMessage(), 400);
+            return new JsonResponse([
+                'error' => $e->getMessage()
+            ], 400);
         }
     }
 }

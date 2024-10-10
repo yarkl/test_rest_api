@@ -9,11 +9,11 @@ use App\Model\Flusher;
 use App\Model\User\Entity\Document\DocumentRepository;
 use App\Model\User\UseCase\Document\Result;
 
-class Handler
+readonly class Handler
 {
     public function __construct(
-        private readonly DocumentRepository $repository,
-        private readonly Flusher $flusher
+        private DocumentRepository $repository,
+        private Flusher $flusher
     ) {}
 
     public function handle(Command $command): Result
@@ -24,9 +24,7 @@ class Handler
             throw new DocumentNotFoundException("Document with uuid '{$command->uuid}' not found");
         }
 
-        $payload = json_decode($command->payload, true);
-
-        $document->updatePayload($payload);
+        $document->updatePayload($command->payload);
         $document->modifiedAt();
         $document->publish();
 
@@ -35,7 +33,7 @@ class Handler
         return new Result(
             $document->getUuid()->getValue(),
             $document->status(),
-            $payload,
+            $command->payload,
             $document->getCreatedAt()->format('Y-m-d H:i:s'),
             $document->getModifiedAt()->format('Y-m-d H:i:s')
         );
